@@ -3,6 +3,8 @@
 require_once 'includes/functions.php';
 require_once 'includes/db_config.php';
 require_once 'includes/book_functions.php';
+require_once 'includes/auth_functions.php';
+require_once 'includes/wishlist_functions.php';
 
 // Set page title
 $pageTitle = 'Browse Books';
@@ -117,7 +119,28 @@ include 'includes/header.php';
                                     <span class="book-genre"><?php echo htmlspecialchars($book['genre']); ?></span>
                                     <span class="book-location">📍 <?php echo htmlspecialchars($book['location']); ?></span>
                                 </div>
-                                <button class="btn-toggle-details" data-book-id="<?php echo $book['book_id']; ?>">View Details</button>
+                                <div class="book-actions">
+                                    <button class="btn-toggle-details" data-book-id="<?php echo $book['book_id']; ?>">View Details</button>
+                                    <?php if (isLoggedIn()): ?>
+                                        <?php if (isInWishlist($book['book_id'])): ?>
+                                        <form action="process_wishlist.php" method="POST" style="display: inline;">
+                                            <input type="hidden" name="action" value="remove">
+                                            <input type="hidden" name="book_id" value="<?php echo $book['book_id']; ?>">
+                                            <button type="submit" class="btn-wishlist active" title="Remove from wishlist">
+                                                💚 In Wishlist
+                                            </button>
+                                        </form>
+                                        <?php else: ?>
+                                        <form action="process_wishlist.php" method="POST" style="display: inline;">
+                                            <input type="hidden" name="action" value="add">
+                                            <input type="hidden" name="book_id" value="<?php echo $book['book_id']; ?>">
+                                            <button type="submit" class="btn-wishlist" title="Add to wishlist">
+                                                🤍 Add to Wishlist
+                                            </button>
+                                        </form>
+                                        <?php endif; ?>
+                                    <?php endif; ?>
+                                </div>
                                 <div class="book-details hidden" id="details-<?php echo $book['book_id']; ?>">
                                     <p><strong>Condition:</strong> <?php echo htmlspecialchars($book['book_condition']); ?></p>
                                     <p><strong>Exchange Preference:</strong> <?php echo htmlspecialchars($book['exchange_preference']); ?></p>

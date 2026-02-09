@@ -1,7 +1,9 @@
 <?php
 // Include functions
 require_once 'includes/functions.php';
-
+require_once 'includes/db_config.php';
+require_once 'includes/auth_functions.php';
+require_once 'includes/wishlist_functions.php';
 // Set page title
 $pageTitle = 'About & Contact';
 

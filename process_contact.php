@@ -5,8 +5,11 @@
  */
 
 // Include functions
+session_start();  
 require_once 'includes/functions.php';
-
+require_once 'includes/db_config.php';
+require_once 'includes/auth_functions.php';      
+require_once 'includes/wishlist_functions.php';
 // Initialize variables
 $errors = [];
 $formData = [];
